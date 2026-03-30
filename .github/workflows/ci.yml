@@ -1,0 +1,44 @@
+name: build-and-lint
+
+# on -> triggers: define when this workflow should run
+# it basically tells triggers on push to these branches
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+# define jobs (multiple jobs)
+jobs:
+  build-and-lint:
+    runs-on: ubantu-latest
+
+    steps:
+      - name: Checkout repo
+        users: actions/checkout@v3
+
+      - name: Setup Node
+        users: actions/setup-node@v3
+        with:
+          node-version: 22
+
+      - name: Install backend dependencies
+        run: npm cli
+
+      - name: Lint backend
+        run: npm run lint -- --max-warnings=0
+
+      - name: Install frontend dependencies
+        working-directory: client/react-frontend
+        run: npm cli
+
+      - name: Lint frontend
+        working-directory: client/react-frontend
+        run: npm run lint -- --max-warnings=0
+
+      - name: Build backend image
+        run: docker build -t backend .
+
+      - name: Build frontend image
+        run: docker build -t backend ./client/react-frontend
+
