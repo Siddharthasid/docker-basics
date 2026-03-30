@@ -28,7 +28,11 @@ jobs:
 
       - name: Install frontend dependencies
         working-directory: client/react-frontend
-        run: npm ci  # Fixed
+        run: npm ci
+
+      - name: Install ESLint deps  # Add this
+        working-directory: client/react-frontend  
+        run: npm install --save-dev @eslint/js eslint
 
       - name: Lint frontend
         working-directory: client/react-frontend
