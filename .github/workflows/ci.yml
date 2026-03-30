@@ -21,9 +21,11 @@ jobs:
           cache: 'npm'  # Added for speed
 
       - name: Install backend dependencies
+        working-directory: .
         run: npm ci  # Fixed: use ci for CI
 
       - name: Lint backend
+        working-directory: .
         run: npm run lint -- --max-warnings=0
 
       - name: Install frontend dependencies
